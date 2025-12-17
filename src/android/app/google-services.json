@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "195311409261",
+    "project_id": "college-marketplace-r07p1e",
+    "storage_bucket": "college-marketplace-r07p1e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195311409261:android:cd64c9dc2cde5c10db8764",
+        "android_client_info": {
+          "package_name": "com.mycompany.collegemarketplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8jsDsl56R5cMTdm5Sq7yrTlT3sNWGJMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195311409261:android:e465744a4f33c090db8764",
+        "android_client_info": {
+          "package_name": "com.uricsc305.dormdeals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8jsDsl56R5cMTdm5Sq7yrTlT3sNWGJMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
