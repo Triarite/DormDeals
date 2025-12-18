@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
-import 'temp_loggout_widget.dart' show TempLoggoutWidget;
+import 'payment_fail_notif_widget.dart' show PaymentFailNotifWidget;
 import 'package:flutter/material.dart';
 
-class TempLoggoutModel extends FlutterFlowModel<TempLoggoutWidget> {
+class PaymentFailNotifModel extends FlutterFlowModel<PaymentFailNotifWidget> {
   @override
   void initState(BuildContext context) {}
 

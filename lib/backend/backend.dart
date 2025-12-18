@@ -5,10 +5,12 @@ import '../auth/firebase_auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/util/firestore_util.dart';
 
-import 'schema/products_record.dart';
-import 'schema/users_record.dart';
 import 'schema/nps_responses_record.dart';
 import 'schema/retention_metrics_record.dart';
+import 'schema/products_record.dart';
+import 'schema/users_record.dart';
+import 'schema/chat_messages_record.dart';
+import 'schema/chats_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -17,10 +19,86 @@ export 'schema/index.dart';
 export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
-export 'schema/products_record.dart';
-export 'schema/users_record.dart';
 export 'schema/nps_responses_record.dart';
 export 'schema/retention_metrics_record.dart';
+export 'schema/products_record.dart';
+export 'schema/users_record.dart';
+export 'schema/chat_messages_record.dart';
+export 'schema/chats_record.dart';
+
+/// Functions to query NpsResponsesRecords (as a Stream and as a Future).
+Future<int> queryNpsResponsesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      NpsResponsesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<NpsResponsesRecord>> queryNpsResponsesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      NpsResponsesRecord.collection,
+      NpsResponsesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<NpsResponsesRecord>> queryNpsResponsesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      NpsResponsesRecord.collection,
+      NpsResponsesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query RetentionMetricsRecords (as a Stream and as a Future).
+Future<int> queryRetentionMetricsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      RetentionMetricsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<RetentionMetricsRecord>> queryRetentionMetricsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      RetentionMetricsRecord.collection,
+      RetentionMetricsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<RetentionMetricsRecord>> queryRetentionMetricsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      RetentionMetricsRecord.collection,
+      RetentionMetricsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
 
 /// Functions to query ProductsRecords (as a Stream and as a Future).
 Future<int> queryProductsRecordCount({
@@ -96,75 +174,78 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query NpsResponsesRecords (as a Stream and as a Future).
-Future<int> queryNpsResponsesRecordCount({
+/// Functions to query ChatMessagesRecords (as a Stream and as a Future).
+Future<int> queryChatMessagesRecordCount({
+  DocumentReference? parent,
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      NpsResponsesRecord.collection,
+      ChatMessagesRecord.collection(parent),
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<NpsResponsesRecord>> queryNpsResponsesRecord({
+Stream<List<ChatMessagesRecord>> queryChatMessagesRecord({
+  DocumentReference? parent,
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      NpsResponsesRecord.collection,
-      NpsResponsesRecord.fromSnapshot,
+      ChatMessagesRecord.collection(parent),
+      ChatMessagesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<NpsResponsesRecord>> queryNpsResponsesRecordOnce({
+Future<List<ChatMessagesRecord>> queryChatMessagesRecordOnce({
+  DocumentReference? parent,
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      NpsResponsesRecord.collection,
-      NpsResponsesRecord.fromSnapshot,
+      ChatMessagesRecord.collection(parent),
+      ChatMessagesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-/// Functions to query RetentionMetricsRecords (as a Stream and as a Future).
-Future<int> queryRetentionMetricsRecordCount({
+/// Functions to query ChatsRecords (as a Stream and as a Future).
+Future<int> queryChatsRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      RetentionMetricsRecord.collection,
+      ChatsRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<RetentionMetricsRecord>> queryRetentionMetricsRecord({
+Stream<List<ChatsRecord>> queryChatsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      RetentionMetricsRecord.collection,
-      RetentionMetricsRecord.fromSnapshot,
+      ChatsRecord.collection,
+      ChatsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<RetentionMetricsRecord>> queryRetentionMetricsRecordOnce({
+Future<List<ChatsRecord>> queryChatsRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      RetentionMetricsRecord.collection,
-      RetentionMetricsRecord.fromSnapshot,
+      ChatsRecord.collection,
+      ChatsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

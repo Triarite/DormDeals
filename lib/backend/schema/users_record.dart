@@ -71,6 +71,11 @@ class UsersRecord extends FirestoreRecord {
   int get loginCount => _loginCount ?? 0;
   bool hasLoginCount() => _loginCount != null;
 
+  // "shopping_cart" field.
+  List<DocumentReference>? _shoppingCart;
+  List<DocumentReference> get shoppingCart => _shoppingCart ?? const [];
+  bool hasShoppingCart() => _shoppingCart != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -83,6 +88,7 @@ class UsersRecord extends FirestoreRecord {
     _bio = snapshotData['bio'] as String?;
     _ratings = getDataList(snapshotData['ratings']);
     _loginCount = castToType<int>(snapshotData['login_count']);
+    _shoppingCart = getDataList(snapshotData['shopping_cart']);
   }
 
   static CollectionReference get collection =>
@@ -164,7 +170,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.year == e2?.year &&
         e1?.bio == e2?.bio &&
         listEquality.equals(e1?.ratings, e2?.ratings) &&
-        e1?.loginCount == e2?.loginCount;
+        e1?.loginCount == e2?.loginCount &&
+        listEquality.equals(e1?.shoppingCart, e2?.shoppingCart);
   }
 
   @override
@@ -179,7 +186,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.year,
         e?.bio,
         e?.ratings,
-        e?.loginCount
+        e?.loginCount,
+        e?.shoppingCart
       ]);
 
   @override

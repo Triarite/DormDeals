@@ -1,6 +1,20 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    match /nps_responses/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /retention_metrics/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
     match /products/{document} {
       allow create: if true;
       allow read: if true;
@@ -15,14 +29,19 @@ service cloud.firestore {
       allow delete: if request.auth.uid == document;
     }
 
-    match /nps_responses/{document} {
+    match /Chats/{parent}/ChatMessages/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if false;
       allow delete: if false;
     }
 
-    match /retention_metrics/{document} {
+    match /{path=**}/ChatMessages/{document} {
+      allow read: if true;
+    }
+
+
+    match /Chats/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if false;

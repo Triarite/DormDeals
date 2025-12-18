@@ -41,21 +41,18 @@ void main() async {
             create: (context) => FFAppState(),
           ),
         ],
-        child: MyApp(
-          entryPage: AccountCreationWidget(),
-        ),
+        child: const MyApp(),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
       await tester.enterText(
-          find.byKey(const ValueKey('CreationEmail_8ndr')), 'cadije@gmail.com');
+          find.byKey(const ValueKey('UNDEFINED')), 'cadije@gmail.com');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationPassword_yush')), 'Sharky_2010');
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationVerifiedPassword_9e7l')),
-          'Sharky_2010');
-      await tester.tap(find.byKey(const ValueKey('CreationButton_snip')));
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
       expect(find.byKey(const ValueKey('Text_x4o7')), findsOneWidget);
     });
@@ -69,21 +66,18 @@ void main() async {
             create: (context) => FFAppState(),
           ),
         ],
-        child: MyApp(
-          entryPage: AccountCreationWidget(),
-        ),
+        child: const MyApp(),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
-      await tester.enterText(find.byKey(const ValueKey('CreationEmail_8ndr')),
-          'cadije2222@gmail.com');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationPassword_yush')), 'Sharky_2010');
+          find.byKey(const ValueKey('UNDEFINED')), 'cadije2222@gmail.com');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationVerifiedPassword_9e7l')),
-          'Sharky_2010');
-      await tester.tap(find.byKey(const ValueKey('CreationButton_snip')));
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+      await tester.enterText(
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       expect(find.text('Error'), findsOneWidget);
     });
@@ -97,21 +91,17 @@ void main() async {
             create: (context) => FFAppState(),
           ),
         ],
-        child: MyApp(
-          entryPage: AccountCreationWidget(),
-        ),
+        child: const MyApp(),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
+      await tester.enterText(find.byKey(const ValueKey('UNDEFINED')), 'cadije');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationEmail_8ndr')), 'cadije');
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationPassword_yush')), 'Sharky_2010');
-      await tester.enterText(
-          find.byKey(const ValueKey('CreationVerifiedPassword_9e7l')),
-          'Sharky_2010');
-      await tester.tap(find.byKey(const ValueKey('CreationButton_snip')));
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       expect(find.text('Error'), findsOneWidget);
     });
 
@@ -124,20 +114,17 @@ void main() async {
             create: (context) => FFAppState(),
           ),
         ],
-        child: MyApp(
-          entryPage: AccountCreationWidget(),
-        ),
+        child: const MyApp(),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
-      await tester.enterText(find.byKey(const ValueKey('CreationEmail_8ndr')),
-          'cadije7@gmail.com');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationPassword_yush')), 'Sharky_2010');
+          find.byKey(const ValueKey('UNDEFINED')), 'cadije7@gmail.com');
       await tester.enterText(
-          find.byKey(const ValueKey('CreationVerifiedPassword_9e7l')),
-          'Shark_2010');
+          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+      await tester.enterText(
+          find.byKey(const ValueKey('UNDEFINED')), 'Shark_2010');
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       expect(find.text('Error'), findsOneWidget);
     });
@@ -292,7 +279,7 @@ void main() async {
         EnginePhase.sendSemanticsUpdate,
         const Duration(milliseconds: 10000),
       );
-      await tester.tap(find.byKey(const ValueKey('IconButton_ik5k')));
+      await tester.tap(find.byKey(const ValueKey('EditListingButton_ik5k')));
       await tester.pumpAndSettle(
         const Duration(milliseconds: 2000),
         EnginePhase.sendSemanticsUpdate,
@@ -348,7 +335,7 @@ void main() async {
         EnginePhase.sendSemanticsUpdate,
         const Duration(milliseconds: 10000),
       );
-      await tester.tap(find.byKey(const ValueKey('IconButton_ik5k')));
+      await tester.tap(find.byKey(const ValueKey('EditListingButton_ik5k')));
       await tester.pumpAndSettle(
         const Duration(milliseconds: 2000),
         EnginePhase.sendSemanticsUpdate,
@@ -403,7 +390,7 @@ void main() async {
         EnginePhase.sendSemanticsUpdate,
         const Duration(milliseconds: 10000),
       );
-      await tester.tap(find.byKey(const ValueKey('IconButton_ik5k')));
+      await tester.tap(find.byKey(const ValueKey('EditListingButton_ik5k')));
       await tester.pumpAndSettle(
         const Duration(milliseconds: 2000),
         EnginePhase.sendSemanticsUpdate,
@@ -435,16 +422,16 @@ void main() async {
         ),
       ],
       child: MyApp(
-        entryPage: LoginPageWidget(),
+        entryPage: AuthenticationWidget(),
       ),
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.enterText(find.byKey(const ValueKey('loginEnterEmail_e4lz')),
-        'aloha.oi@gmail.com');
     await tester.enterText(
-        find.byKey(const ValueKey('loginEnterPW_h1ur')), 'SpaceDandy');
-    await tester.tap(find.byKey(const ValueKey('loginButton_6ich')));
+        find.byKey(const ValueKey('emailAddress_2e33')), 'aloha.oi@gmail.com');
+    await tester.enterText(
+        find.byKey(const ValueKey('password_el3c')), 'SpaceDandy');
+    await tester.tap(find.byKey(const ValueKey('Button_3f0u')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.byKey(const ValueKey('ChoiceChips_4dgn')), findsOneWidget);
   });

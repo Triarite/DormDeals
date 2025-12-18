@@ -1,6 +1,8 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -8,11 +10,14 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'sell_page_model.dart';
 export 'sell_page_model.dart';
@@ -27,10 +32,13 @@ class SellPageWidget extends StatefulWidget {
   State<SellPageWidget> createState() => _SellPageWidgetState();
 }
 
-class _SellPageWidgetState extends State<SellPageWidget> {
+class _SellPageWidgetState extends State<SellPageWidget>
+    with TickerProviderStateMixin {
   late SellPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -54,6 +62,33 @@ class _SellPageWidgetState extends State<SellPageWidget> {
     _model.descriptionFieldTextController ??= TextEditingController();
     _model.descriptionFieldFocusNode ??= FocusNode();
 
+    animationsMap.addAll({
+      'iconButtonOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 450.0.ms,
+            color: Color(0x80FFFFFF),
+            angle: 0.524,
+          ),
+        ],
+      ),
+      'iconButtonOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 450.0.ms,
+            color: Color(0x80FFFFFF),
+            angle: 0.524,
+          ),
+        ],
+      ),
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -75,55 +110,41 @@ class _SellPageWidgetState extends State<SellPageWidget> {
         key: scaffoldKey,
         backgroundColor: Color(0xFFECE7E8),
         appBar: AppBar(
-          backgroundColor: Color(0xFF131B23),
+          backgroundColor: FlutterFlowTheme.of(context).secondary,
           automaticallyImplyLeading: false,
-          title: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                FlutterFlowIconButton(
-                  borderRadius: 8.0,
-                  buttonSize: 40.0,
-                  fillColor: Color(0xFF131B23),
-                  icon: Icon(
-                    Icons.arrow_back_outlined,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 28.0,
-                  ),
-                  onPressed: () async {
-                    logFirebaseEvent('SELL_arrow_back_outlined_ICN_ON_TAP');
-                    logFirebaseEvent('IconButton_navigate_to');
-
-                    context.pushNamed(BrowsePageWidget.routeName);
-                  },
-                ),
-                Text(
-                  'Sell an Item',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        font: GoogleFonts.interTight(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .fontStyle,
-                        ),
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        fontSize: 20.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FlutterFlowTheme.of(context)
-                            .headlineMedium
-                            .fontWeight,
-                        fontStyle: FlutterFlowTheme.of(context)
-                            .headlineMedium
-                            .fontStyle,
-                      ),
-                ),
-              ],
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30.0,
             ),
+            onPressed: () async {
+              logFirebaseEvent('SELL_arrow_back_rounded_ICN_ON_TAP');
+              logFirebaseEvent('IconButton_navigate_back');
+              context.pop();
+            },
+          ),
+          title: Text(
+            'Sell an Item',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  font: GoogleFonts.interTight(
+                    fontWeight:
+                        FlutterFlowTheme.of(context).headlineMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).headlineMedium.fontStyle,
+                  ),
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  fontSize: 20.0,
+                  letterSpacing: 0.0,
+                  fontWeight:
+                      FlutterFlowTheme.of(context).headlineMedium.fontWeight,
+                  fontStyle:
+                      FlutterFlowTheme.of(context).headlineMedium.fontStyle,
+                ),
           ),
           actions: [],
           centerTitle: false,
@@ -135,104 +156,9 @@ class _SellPageWidgetState extends State<SellPageWidget> {
             padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    logFirebaseEvent('SELL_PAGE_PAGE_Container_ON_TAP');
-                    logFirebaseEvent('Container_store_media_for_upload');
-                    final selectedMedia =
-                        await selectMediaWithSourceBottomSheet(
-                      context: context,
-                      maxWidth: 200.00,
-                      maxHeight: 200.00,
-                      imageQuality: 80,
-                      allowPhoto: true,
-                    );
-                    if (selectedMedia != null &&
-                        selectedMedia.every((m) =>
-                            validateFileFormat(m.storagePath, context))) {
-                      safeSetState(
-                          () => _model.isDataUploading_uploadData757 = true);
-                      var selectedUploadedFiles = <FFUploadedFile>[];
-
-                      try {
-                        selectedUploadedFiles = selectedMedia
-                            .map((m) => FFUploadedFile(
-                                  name: m.storagePath.split('/').last,
-                                  bytes: m.bytes,
-                                  height: m.dimensions?.height,
-                                  width: m.dimensions?.width,
-                                  blurHash: m.blurHash,
-                                  originalFilename: m.originalFilename,
-                                ))
-                            .toList();
-                      } finally {
-                        _model.isDataUploading_uploadData757 = false;
-                      }
-                      if (selectedUploadedFiles.length ==
-                          selectedMedia.length) {
-                        safeSetState(() {
-                          _model.uploadedLocalFile_uploadData757 =
-                              selectedUploadedFiles.first;
-                        });
-                      } else {
-                        safeSetState(() {});
-                        return;
-                      }
-                    }
-                  },
-                  child: Container(
-                    width: 200.0,
-                    height: 200.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Column(
-                      key: ValueKey('Column_ch9f'),
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Stack(
-                          children: [
-                            if (_model.finalImageUrl == null ||
-                                _model.finalImageUrl == '')
-                              Align(
-                                alignment: AlignmentDirectional(0.0, -1.0),
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: Color(0xFF0073B6),
-                                  size: 40.0,
-                                ),
-                              ),
-                            if ((_model.uploadedLocalFile_uploadData757.bytes
-                                        ?.isNotEmpty ??
-                                    false))
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  child: Image.memory(
-                                    _model.uploadedLocalFile_uploadData757
-                                            .bytes ??
-                                        Uint8List.fromList([]),
-                                    width: 374.3,
-                                    height: 200.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Opacity(
                   opacity: 0.0,
                   child: FlutterFlowTimer(
@@ -259,6 +185,7 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                                 .headlineSmall
                                 .fontStyle,
                           ),
+                          fontSize: 1.0,
                           letterSpacing: 0.0,
                           fontWeight: FlutterFlowTheme.of(context)
                               .headlineSmall
@@ -267,6 +194,106 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                               .headlineSmall
                               .fontStyle,
                         ),
+                  ),
+                ),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    logFirebaseEvent('SELL_PAGE_PAGE_Container_ON_TAP');
+                    logFirebaseEvent('Container_store_media_for_upload');
+                    final selectedMedia =
+                        await selectMediaWithSourceBottomSheet(
+                      context: context,
+                      maxWidth: 200.00,
+                      maxHeight: 200.00,
+                      imageQuality: 80,
+                      allowPhoto: true,
+                    );
+                    if (selectedMedia != null &&
+                        selectedMedia.every((m) =>
+                            validateFileFormat(m.storagePath, context))) {
+                      safeSetState(
+                          () => _model.isDataUploading_uploadedImage = true);
+                      var selectedUploadedFiles = <FFUploadedFile>[];
+
+                      try {
+                        selectedUploadedFiles = selectedMedia
+                            .map((m) => FFUploadedFile(
+                                  name: m.storagePath.split('/').last,
+                                  bytes: m.bytes,
+                                  height: m.dimensions?.height,
+                                  width: m.dimensions?.width,
+                                  blurHash: m.blurHash,
+                                  originalFilename: m.originalFilename,
+                                ))
+                            .toList();
+                      } finally {
+                        _model.isDataUploading_uploadedImage = false;
+                      }
+                      if (selectedUploadedFiles.length ==
+                          selectedMedia.length) {
+                        safeSetState(() {
+                          _model.uploadedLocalFile_uploadedImage =
+                              selectedUploadedFiles.first;
+                        });
+                      } else {
+                        safeSetState(() {});
+                        return;
+                      }
+                    }
+
+                    logFirebaseEvent('Container_update_page_state');
+                    _model.isImageUploaded = true;
+                    safeSetState(() {});
+                  },
+                  child: Container(
+                    width: 200.0,
+                    height: 200.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Column(
+                      key: ValueKey('Column_ch9f'),
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Stack(
+                          children: [
+                            if (_model.finalImageUrl == null ||
+                                _model.finalImageUrl == '')
+                              Align(
+                                alignment: AlignmentDirectional(0.0, -1.0),
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Color(0xFF0073B6),
+                                  size: 40.0,
+                                ),
+                              ),
+                            if ((_model.uploadedLocalFile_uploadedImage.bytes
+                                        ?.isNotEmpty ??
+                                    false))
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  child: Image.memory(
+                                    _model.uploadedLocalFile_uploadedImage
+                                            .bytes ??
+                                        Uint8List.fromList([]),
+                                    width: 374.3,
+                                    height: 200.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -374,99 +401,297 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                         .asValidator(context),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: FlutterFlowChoiceChips(
-                    options: [
-                      ChipData('Textbooks'),
-                      ChipData('Furniture'),
-                      ChipData('Kitchenware'),
-                      ChipData('Electronics'),
-                      ChipData('Other')
-                    ],
-                    onChanged: (val) => safeSetState(
-                        () => _model.choiceChipsValue = val?.firstOrNull),
-                    selectedChipStyle: ChipStyle(
-                      backgroundColor: Color(0xFF0073B6),
-                      textStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.override(
-                                font: GoogleFonts.inter(
+                FlutterFlowChoiceChips(
+                  options: [
+                    ChipData('Textbooks'),
+                    ChipData('Furniture'),
+                    ChipData('Kitchenware'),
+                    ChipData('Electronics')
+                  ],
+                  onChanged: (val) => safeSetState(
+                      () => _model.choiceChipsValue = val?.firstOrNull),
+                  selectedChipStyle: ChipStyle(
+                    backgroundColor: Color(0xFF0073B6),
+                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          color: FlutterFlowTheme.of(context).info,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                    iconColor: FlutterFlowTheme.of(context).info,
+                    iconSize: 16.0,
+                    elevation: 0.0,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  unselectedChipStyle: ChipStyle(
+                    backgroundColor:
+                        FlutterFlowTheme.of(context).secondaryBackground,
+                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                    iconColor: Color(0xFF131B23),
+                    iconSize: 16.0,
+                    elevation: 0.0,
+                    borderColor: Color(0xFFE5E7EB),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  chipSpacing: 8.0,
+                  rowSpacing: 8.0,
+                  multiselect: false,
+                  alignment: WrapAlignment.start,
+                  controller: _model.choiceChipsValueController ??=
+                      FormFieldController<List<String>>(
+                    [],
+                  ),
+                  wrapped: true,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: 200.0,
+                        child: TextFormField(
+                          key: ValueKey('priceField_6dco'),
+                          controller: _model.priceFieldTextController,
+                          focusNode: _model.priceFieldFocusNode,
+                          autofocus: false,
+                          enabled: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            labelText: 'Price',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                      .labelMedium
                                       .fontWeight,
                                   fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                      .labelMedium
                                       .fontStyle,
                                 ),
-                                color: FlutterFlowTheme.of(context).info,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
+                            hintText: '0.00',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .fontStyle,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
                               ),
-                      iconColor: FlutterFlowTheme.of(context).info,
-                      iconSize: 16.0,
-                      elevation: 0.0,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    unselectedChipStyle: ChipStyle(
-                      backgroundColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      textStyle: FlutterFlowTheme.of(context)
-                          .bodyMedium
-                          .override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
                             ),
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                           ),
-                      iconColor: Color(0xFF131B23),
-                      iconSize: 16.0,
-                      elevation: 0.0,
-                      borderColor: Color(0xFFE5E7EB),
-                      borderRadius: BorderRadius.circular(16.0),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                          cursorColor: FlutterFlowTheme.of(context).primaryText,
+                          enableInteractiveSelection: true,
+                          validator: _model.priceFieldTextControllerValidator
+                              .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
+                          ],
+                        ),
+                      ),
                     ),
-                    chipSpacing: 8.0,
-                    rowSpacing: 8.0,
-                    multiselect: false,
-                    alignment: WrapAlignment.start,
-                    controller: _model.choiceChipsValueController ??=
-                        FormFieldController<List<String>>(
-                      [],
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0.0),
+                        bottomRight: Radius.circular(8.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(8.0),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0.0),
+                            bottomRight: Radius.circular(8.0),
+                            topLeft: Radius.circular(0.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                        ),
+                        child: FlutterFlowIconButton(
+                          buttonSize: 40.0,
+                          fillColor: Color(0xFF4B39EF),
+                          icon: Icon(
+                            Icons.auto_awesome,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: 20.0,
+                          ),
+                          showLoadingIndicator: true,
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'SELL_PAGE_PAGE_GeneratePrice_ON_TAP');
+                            // Convert the uploaded file to base64
+                            logFirebaseEvent(
+                                'GeneratePrice_Converttheuploadedfiletoba');
+                            _model.fileBase64 =
+                                await actions.uploadedFileToBase64(
+                              _model.uploadedLocalFile_uploadedImage,
+                            );
+                            logFirebaseEvent('GeneratePrice_backend_call');
+                            _model.generatedPrice =
+                                await GetPriceFromImageAndTitleCall.call(
+                              image: _model.fileBase64,
+                              title: _model.titleFieldTextController.text,
+                            );
+
+                            logFirebaseEvent('GeneratePrice_set_form_field');
+                            safeSetState(() {
+                              _model.priceFieldTextController?.text =
+                                  getJsonField(
+                                (_model.generatedPrice?.jsonBody ?? ''),
+                                r'''$.candidates[0].content.parts[0].text''',
+                              ).toString();
+                            });
+
+                            safeSetState(() {});
+                          },
+                        ).animateOnPageLoad(
+                            animationsMap['iconButtonOnPageLoadAnimation1']!),
+                      ),
                     ),
-                    wrapped: true,
-                  ),
+                  ],
                 ),
-                Container(
-                  width: 200.0,
-                  child: TextFormField(
-                    key: ValueKey('priceField_6dco'),
-                    controller: _model.priceFieldTextController,
-                    focusNode: _model.priceFieldFocusNode,
-                    autofocus: false,
-                    enabled: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      labelText: 'Price',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                font: GoogleFonts.inter(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: 200.0,
+                        child: TextFormField(
+                          key: ValueKey('descriptionField_y2at'),
+                          controller: _model.descriptionFieldTextController,
+                          focusNode: _model.descriptionFieldFocusNode,
+                          autofocus: false,
+                          enabled: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            labelText: 'Description',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .fontWeight,
@@ -474,18 +699,19 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                                       .labelMedium
                                       .fontStyle,
                                 ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
-                              ),
-                      hintText: '0.00',
-                      hintStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                font: GoogleFonts.inter(
+                            hintText: 'Details, meet-up spot…',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .fontWeight,
@@ -493,170 +719,149 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                                       .labelMedium
                                       .fontStyle,
                                 ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
                               ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(0.0),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                           ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                          maxLines: 3,
+                          minLines: 3,
+                          cursorColor: FlutterFlowTheme.of(context).primaryText,
+                          enableInteractiveSelection: true,
+                          validator: _model
+                              .descriptionFieldTextControllerValidator
+                              .asValidator(context),
                         ),
-                    cursorColor: FlutterFlowTheme.of(context).primaryText,
-                    enableInteractiveSelection: true,
-                    validator: _model.priceFieldTextControllerValidator
-                        .asValidator(context),
-                  ),
-                ),
-                Container(
-                  width: 200.0,
-                  child: TextFormField(
-                    key: ValueKey('descriptionField_y2at'),
-                    controller: _model.descriptionFieldTextController,
-                    focusNode: _model.descriptionFieldFocusNode,
-                    autofocus: false,
-                    enabled: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      labelText: 'Description',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
-                              ),
-                      hintText: 'Details, meet-up spot…',
-                      hintStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
-                              ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0.0),
+                        bottomRight: Radius.circular(8.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(8.0),
+                      ),
+                      child: Container(
+                        height: 75.0,
+                        constraints: BoxConstraints(
+                          maxHeight: double.infinity,
                         ),
-                    cursorColor: FlutterFlowTheme.of(context).primaryText,
-                    enableInteractiveSelection: true,
-                    validator: _model.descriptionFieldTextControllerValidator
-                        .asValidator(context),
-                  ),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF4B39EF),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0.0),
+                            bottomRight: Radius.circular(8.0),
+                            topLeft: Radius.circular(0.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                        ),
+                        child: FlutterFlowIconButton(
+                          buttonSize: 40.0,
+                          fillColor: Color(0xFF4B39EF),
+                          icon: Icon(
+                            Icons.auto_awesome,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: 20.0,
+                          ),
+                          showLoadingIndicator: true,
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'SELL_PAGE_PAGE_GenerateDesc_ON_TAP');
+                            // Convert the uploaded file to base64
+                            logFirebaseEvent(
+                                'GenerateDesc_Converttheuploadedfiletobas');
+                            _model.fileBase64Desc =
+                                await actions.uploadedFileToBase64(
+                              _model.uploadedLocalFile_uploadedImage,
+                            );
+                            logFirebaseEvent('GenerateDesc_backend_call');
+                            _model.generatedDesc =
+                                await GetDescFromImageAndTitleCopyCall.call(
+                              image: _model.fileBase64Desc,
+                              title: _model.titleFieldTextController.text,
+                            );
+
+                            logFirebaseEvent('GenerateDesc_set_form_field');
+                            safeSetState(() {
+                              _model.descriptionFieldTextController?.text =
+                                  getJsonField(
+                                (_model.generatedDesc?.jsonBody ?? ''),
+                                r'''$.candidates[0].content.parts[0].text''',
+                              ).toString();
+                            });
+
+                            safeSetState(() {});
+                          },
+                        ).animateOnPageLoad(
+                            animationsMap['iconButtonOnPageLoadAnimation2']!),
+                      ),
+                    ),
+                  ],
                 ),
                 FFButtonWidget(
                   key: ValueKey('PublishButton_fwwn'),
@@ -671,10 +876,10 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                       var downloadUrls = <String>[];
                       try {
                         selectedUploadedFiles = _model
-                                .uploadedLocalFile_uploadData757
+                                .uploadedLocalFile_uploadedImage
                                 .bytes!
                                 .isNotEmpty
-                            ? [_model.uploadedLocalFile_uploadData757]
+                            ? [_model.uploadedLocalFile_uploadedImage]
                             : <FFUploadedFile>[];
                         selectedFiles = selectedFilesFromUploadedFiles(
                           selectedUploadedFiles,
@@ -725,6 +930,7 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                             ownerRef: currentUserReference,
                             createdAt: currentUserDocument?.createdTime,
                             image: _model.finalImageUrl,
+                            category: _model.choiceChipsValue,
                           ));
                       logFirebaseEvent('PublishButton_timer');
                       _model.timerController.onStopTimer();
@@ -759,7 +965,7 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                         EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Color(0xFF0073B6),
+                    color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           font: GoogleFonts.interTight(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -777,11 +983,11 @@ class _SellPageWidgetState extends State<SellPageWidget> {
                           fontStyle:
                               FlutterFlowTheme.of(context).titleSmall.fontStyle,
                         ),
-                    elevation: 0.0,
+                    elevation: 5.0,
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-              ].divide(SizedBox(height: 12.0)),
+              ].divide(SizedBox(height: 30.0)),
             ),
           ),
         ),

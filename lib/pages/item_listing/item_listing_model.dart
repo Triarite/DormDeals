@@ -8,10 +8,16 @@ class ItemListingModel extends FlutterFlowModel<ItemListingWidget> {
   /// True if description is expanded, false otherwise
   bool isDescriptionExpanded = false;
 
+  bool isOptionsContainerOpen = false;
+
+  bool hideOptionsContainer = true;
+
   ///  State fields for stateful widgets in this page.
 
   // Model for SellerInfo component.
   late SellerInfoModel sellerInfoModel;
+  // Stores action output result for [Stripe Payment] action in buyNow widget.
+  String? paymentId;
 
   @override
   void initState(BuildContext context) {

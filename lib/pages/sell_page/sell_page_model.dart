@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -11,11 +12,13 @@ class SellPageModel extends FlutterFlowModel<SellPageWidget> {
 
   String? finalImageUrl;
 
-  ///  State fields for stateful widgets in this page.
+  bool isImageUploaded = false;
 
-  bool isDataUploading_uploadData757 = false;
-  FFUploadedFile uploadedLocalFile_uploadData757 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  bool priceIsGenerating = false;
+
+  bool descIsGenerating = false;
+
+  ///  State fields for stateful widgets in this page.
 
   // State field(s) for Timer widget.
   final timerInitialTimeMs = 0;
@@ -27,6 +30,10 @@ class SellPageModel extends FlutterFlowModel<SellPageWidget> {
   );
   FlutterFlowTimerController timerController =
       FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countUp));
+
+  bool isDataUploading_uploadedImage = false;
+  FFUploadedFile uploadedLocalFile_uploadedImage =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // State field(s) for titleField widget.
   FocusNode? titleFieldFocusNode;
@@ -42,11 +49,19 @@ class SellPageModel extends FlutterFlowModel<SellPageWidget> {
   FocusNode? priceFieldFocusNode;
   TextEditingController? priceFieldTextController;
   String? Function(BuildContext, String?)? priceFieldTextControllerValidator;
+  // Stores action output result for [Custom Action - uploadedFileToBase64] action in GeneratePrice widget.
+  String? fileBase64;
+  // Stores action output result for [Backend Call - API (Get Price from Image and Title)] action in GeneratePrice widget.
+  ApiCallResponse? generatedPrice;
   // State field(s) for descriptionField widget.
   FocusNode? descriptionFieldFocusNode;
   TextEditingController? descriptionFieldTextController;
   String? Function(BuildContext, String?)?
       descriptionFieldTextControllerValidator;
+  // Stores action output result for [Custom Action - uploadedFileToBase64] action in GenerateDesc widget.
+  String? fileBase64Desc;
+  // Stores action output result for [Backend Call - API (Get Desc from Image and Title Copy)] action in GenerateDesc widget.
+  ApiCallResponse? generatedDesc;
   bool isDataUploading_uploadDataLf9 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLf9 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');

@@ -86,19 +86,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) {
     navigatorKey: appNavigatorKey,
     errorBuilder: (context, state) => appStateNotifier.loggedIn
         ? entryPage ?? BrowsePageWidget()
-        : LoginPageWidget(),
+        : WelcomePageWidget(),
     routes: [
       FFRoute(
         name: '_initialize',
         path: '/',
         builder: (context, _) => appStateNotifier.loggedIn
             ? entryPage ?? BrowsePageWidget()
-            : LoginPageWidget(),
-      ),
-      FFRoute(
-        name: AccountCreationWidget.routeName,
-        path: AccountCreationWidget.routePath,
-        builder: (context, params) => AccountCreationWidget(),
+            : WelcomePageWidget(),
       ),
       FFRoute(
         name: ProfileCreationWidget.routeName,
@@ -106,9 +101,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) {
         builder: (context, params) => ProfileCreationWidget(),
       ),
       FFRoute(
+        name: ForgotPWPageWidget.routeName,
+        path: ForgotPWPageWidget.routePath,
+        builder: (context, params) => ForgotPWPageWidget(),
+      ),
+      FFRoute(
+        name: WelcomePageWidget.routeName,
+        path: WelcomePageWidget.routePath,
+        builder: (context, params) => WelcomePageWidget(),
+      ),
+      FFRoute(
         name: SellPageWidget.routeName,
         path: SellPageWidget.routePath,
         builder: (context, params) => SellPageWidget(),
+      ),
+      FFRoute(
+        name: ShoppingCartWidget.routeName,
+        path: ShoppingCartWidget.routePath,
+        builder: (context, params) => ShoppingCartWidget(),
+      ),
+      FFRoute(
+        name: AuthenticationWidget.routeName,
+        path: AuthenticationWidget.routePath,
+        builder: (context, params) => AuthenticationWidget(),
       ),
       FFRoute(
         name: BrowsePageWidget.routeName,
@@ -116,21 +131,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) {
         builder: (context, params) => BrowsePageWidget(),
       ),
       FFRoute(
-        name: TempLoggoutWidget.routeName,
-        path: TempLoggoutWidget.routePath,
-        builder: (context, params) => TempLoggoutWidget(),
-      ),
-      FFRoute(
-        name: LoginPageWidget.routeName,
-        path: LoginPageWidget.routePath,
-        builder: (context, params) => LoginPageWidget(),
-      ),
-      FFRoute(
-        name: ProfileViewerWidget.routeName,
-        path: ProfileViewerWidget.routePath,
-        builder: (context, params) => ProfileViewerWidget(
-          userDocumentReference: params.getParam(
-            'userDocumentReference',
+        name: MessagesPageWidget.routeName,
+        path: MessagesPageWidget.routePath,
+        builder: (context, params) => MessagesPageWidget(
+          recieveChat: params.getParam(
+            'recieveChat',
+            ParamType.DocumentReference,
+            isList: false,
+            collectionNamePath: ['Chats'],
+          ),
+          otherUserRef: params.getParam(
+            'otherUserRef',
             ParamType.DocumentReference,
             isList: false,
             collectionNamePath: ['users'],
@@ -138,9 +149,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) {
         ),
       ),
       FFRoute(
-        name: ForgotPWPageWidget.routeName,
-        path: ForgotPWPageWidget.routePath,
-        builder: (context, params) => ForgotPWPageWidget(),
+        name: MyProductsWidget.routeName,
+        path: MyProductsWidget.routePath,
+        builder: (context, params) => MyProductsWidget(),
+      ),
+      FFRoute(
+        name: ChatPageWidget.routeName,
+        path: ChatPageWidget.routePath,
+        builder: (context, params) => ChatPageWidget(
+          sellerInformationforChat: params.getParam(
+            'sellerInformationforChat',
+            ParamType.DocumentReference,
+            isList: false,
+            collectionNamePath: ['users'],
+          ),
+        ),
       ),
       FFRoute(
         name: ItemListingWidget.routeName,
@@ -152,6 +175,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) {
           productsDocument: params.getParam(
             'productsDocument',
             ParamType.Document,
+          ),
+          sellerDocumentReference: params.getParam(
+            'sellerDocumentReference',
+            ParamType.DocumentReference,
+            isList: false,
+            collectionNamePath: ['users'],
           ),
         ),
       ),
@@ -331,7 +360,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/loginPage';
+            return '/welcomePage';
           }
           return null;
         },

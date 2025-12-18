@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/index.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,22 +57,24 @@ class _ForgotPWPageWidgetState extends State<ForgotPWPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: FlutterFlowTheme.of(context).alternate,
-            borderRadius: 20.0,
-            borderWidth: 1.0,
-            buttonSize: 40.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 20.0,
+          leading: Padding(
+            padding: EdgeInsets.all(4.0),
+            child: FlutterFlowIconButton(
+              borderColor: FlutterFlowTheme.of(context).alternate,
+              borderRadius: 20.0,
+              borderWidth: 1.0,
+              buttonSize: 40.0,
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: FlutterFlowTheme.of(context).primaryText,
+                size: 20.0,
+              ),
+              onPressed: () async {
+                logFirebaseEvent('FORGOT_P_W_PAGE_PAGE_backButton_ON_TAP');
+                logFirebaseEvent('backButton_navigate_back');
+                context.safePop();
+              },
             ),
-            onPressed: () async {
-              logFirebaseEvent('FORGOT_P_W_PAGE_PAGE_backButton_ON_TAP');
-              logFirebaseEvent('backButton_navigate_to');
-
-              context.pushNamed(LoginPageWidget.routeName);
-            },
           ),
           actions: [],
           centerTitle: false,

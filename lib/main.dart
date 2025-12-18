@@ -10,15 +10,26 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
+import 'backend/stripe/payment_manager.dart';
+
+import '/flutter_flow/admob_util.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
+  final environmentValues = FFDevEnvironmentValues();
+  await environmentValues.initialize();
+
   await initFirebase();
+
+  adMobUpdateRequestConfiguration();
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
+
+  await initializeStripe();
 
   await initializeFirebaseRemoteConfig();
 

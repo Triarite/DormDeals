@@ -5,24 +5,28 @@ import 'edit_listing_widget.dart' show EditListingWidget;
 import 'package:flutter/material.dart';
 
 class EditListingModel extends FlutterFlowModel<EditListingWidget> {
+  ///  Local state fields for this component.
+
+  bool isLoaded = false;
+
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - Read Document] action in editListing widget.
   ProductsRecord? productDocument;
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
+  // State field(s) for DetailsDropDown widget.
+  String? detailsDropDownValue;
+  FormFieldController<String>? detailsDropDownValueController;
+  // State field(s) for DetailField widget.
+  FocusNode? detailFieldFocusNode;
+  TextEditingController? detailFieldTextController;
+  String? Function(BuildContext, String?)? detailFieldTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
+    detailFieldFocusNode?.dispose();
+    detailFieldTextController?.dispose();
   }
 }

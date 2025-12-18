@@ -50,6 +50,16 @@ class ProductsRecord extends FirestoreRecord {
   String get image => _image ?? '';
   bool hasImage() => _image != null;
 
+  // "category" field.
+  String? _category;
+  String get category => _category ?? '';
+  bool hasCategory() => _category != null;
+
+  // "isSold" field.
+  bool? _isSold;
+  bool get isSold => _isSold ?? false;
+  bool hasIsSold() => _isSold != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _price = castToType<double>(snapshotData['price']);
@@ -58,6 +68,8 @@ class ProductsRecord extends FirestoreRecord {
     _ownerRef = snapshotData['owner_ref'] as DocumentReference?;
     _createdAt = snapshotData['created_at'] as DateTime?;
     _image = snapshotData['image'] as String?;
+    _category = snapshotData['category'] as String?;
+    _isSold = snapshotData['isSold'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -102,6 +114,8 @@ Map<String, dynamic> createProductsRecordData({
   DocumentReference? ownerRef,
   DateTime? createdAt,
   String? image,
+  String? category,
+  bool? isSold,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -112,6 +126,8 @@ Map<String, dynamic> createProductsRecordData({
       'owner_ref': ownerRef,
       'created_at': createdAt,
       'image': image,
+      'category': category,
+      'isSold': isSold,
     }.withoutNulls,
   );
 
@@ -129,7 +145,9 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
         e1?.ownerUid == e2?.ownerUid &&
         e1?.ownerRef == e2?.ownerRef &&
         e1?.createdAt == e2?.createdAt &&
-        e1?.image == e2?.image;
+        e1?.image == e2?.image &&
+        e1?.category == e2?.category &&
+        e1?.isSold == e2?.isSold;
   }
 
   @override
@@ -140,7 +158,9 @@ class ProductsRecordDocumentEquality implements Equality<ProductsRecord> {
         e?.ownerUid,
         e?.ownerRef,
         e?.createdAt,
-        e?.image
+        e?.image,
+        e?.category,
+        e?.isSold
       ]);
 
   @override

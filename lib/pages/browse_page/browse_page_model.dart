@@ -9,6 +9,10 @@ class BrowsePageModel extends FlutterFlowModel<BrowsePageWidget> {
 
   String? productImageConverted;
 
+  String? selectedCategory;
+
+  String? searchText;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for SearchItem widget.
