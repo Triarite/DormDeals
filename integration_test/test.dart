@@ -429,11 +429,13 @@ void main() async {
           create: (context) => FFAppState(),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(
+        entryPage: AuthenticationWidget(),
+      ),
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.tap(find.byKey(const ValueKey('Button_ikwe')));
+    await tester.tap(find.byKey(const ValueKey('LogInTab_jgjo')));
     await tester.enterText(
         find.byKey(const ValueKey('emailAddress_2e33')), 'angel@uri.edu');
     await tester.enterText(

@@ -1614,6 +1614,7 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                     16.0, 0.0, 16.0, 0.0),
                                 tabs: [
                                   Tab(
+                                    key: ValueKey('LogInTab_jgjo'),
                                     text: 'Log In',
                                   ),
                                   Tab(
