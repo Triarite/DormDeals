@@ -1,4 +1,3 @@
-import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
@@ -48,14 +47,6 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsets.all(22.0),
-              child: FlutterFlowAdBanner(
-                height: 60.0,
-                showsTestAd: false,
-                androidAdUnitID: 'ca-app-pub-5516811349584477/7267629812',
-              ),
-            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
@@ -177,6 +168,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FFButtonWidget(
+                  key: ValueKey('Button_ikwe'),
                   onPressed: () async {
                     logFirebaseEvent(
                         'WELCOME_PAGE_PAGE_GET_STARTED_BTN_ON_TAP');

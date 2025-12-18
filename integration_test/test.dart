@@ -42,12 +42,13 @@ void main() async {
           ),
         ],
         child: MyApp(
-          entryPage: AuthenticationWidget(),
+          entryPage: WelcomePageWidget(),
         ),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      await tester.tap(find.byKey(const ValueKey('Button_ikwe')));
       await tester.tap(find.byKey(const ValueKey('CreateAccountTab_ufk5')));
       await tester.enterText(
           find.byKey(const ValueKey('emailAddress_Create_mkv3')),
