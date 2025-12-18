@@ -76,14 +76,17 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
+      await tester.tap(find.byKey(const ValueKey('Button_ikwe')));
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'cadije2222@gmail.com');
+          find.byKey(const ValueKey('emailAddress_Create_mkv3')),
+          'angel@uri.edu');
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+          find.byKey(const ValueKey('password_Create_5asp')), 'Sharky_2010');
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
-      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
+          find.byKey(const ValueKey('password_CreateConfirm_7qv7')),
+          'Sharky_2010');
+      await tester.tap(find.byKey(const ValueKey('Button_7j5x')));
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       expect(find.text('Error'), findsOneWidget);
     });
@@ -426,16 +429,15 @@ void main() async {
           create: (context) => FFAppState(),
         ),
       ],
-      child: MyApp(
-        entryPage: AuthenticationWidget(),
-      ),
+      child: const MyApp(),
     ));
     await GoogleFonts.pendingFonts();
 
+    await tester.tap(find.byKey(const ValueKey('Button_ikwe')));
     await tester.enterText(
-        find.byKey(const ValueKey('emailAddress_2e33')), 'aloha.oi@gmail.com');
+        find.byKey(const ValueKey('emailAddress_2e33')), 'angel@uri.edu');
     await tester.enterText(
-        find.byKey(const ValueKey('password_el3c')), 'SpaceDandy');
+        find.byKey(const ValueKey('password_el3c')), '123456');
     await tester.tap(find.byKey(const ValueKey('Button_3f0u')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.byKey(const ValueKey('ChoiceChips_4dgn')), findsOneWidget);
