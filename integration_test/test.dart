@@ -41,18 +41,23 @@ void main() async {
             create: (context) => FFAppState(),
           ),
         ],
-        child: const MyApp(),
+        child: MyApp(
+          entryPage: AuthenticationWidget(),
+        ),
       ));
       await GoogleFonts.pendingFonts();
 
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      await tester.tap(find.byKey(const ValueKey('CreateAccountTab_ufk5')));
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'cadije@gmail.com');
+          find.byKey(const ValueKey('emailAddress_Create_mkv3')),
+          'cadije@uri.edu ');
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
+          find.byKey(const ValueKey('password_Create_5asp')), 'Sharky_2010');
       await tester.enterText(
-          find.byKey(const ValueKey('UNDEFINED')), 'Sharky_2010');
-      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
+          find.byKey(const ValueKey('password_CreateConfirm_7qv7')),
+          'Sharky_2010');
+      await tester.tap(find.byKey(const ValueKey('Button_7j5x')));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
       expect(find.byKey(const ValueKey('Text_x4o7')), findsOneWidget);
     });
@@ -154,7 +159,7 @@ void main() async {
         (WidgetTester tester) async {
       _overrideOnError();
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: 'cadije2222@gmail.com', password: 'Sharky_2010');
+          email: 'cadije@uri.edu ', password: 'Sharky_2010');
       await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -168,7 +173,6 @@ void main() async {
       await tester.enterText(find.byKey(const ValueKey('Name_nzlv')), 'test2');
       await tester.enterText(
           find.byKey(const ValueKey('Major_871k')), 'comp sci');
-      await tester.tap(find.byKey(const ValueKey('Year_zb7l')));
       await tester.enterText(find.byKey(const ValueKey('Bio_6153')), 'Hello ');
       await tester.tap(find.byKey(const ValueKey('CreateProfileButton_b5y8')));
       await tester.pumpAndSettle();

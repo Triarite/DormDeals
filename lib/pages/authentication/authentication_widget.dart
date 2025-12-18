@@ -933,6 +933,8 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                               child: Container(
                                                 width: double.infinity,
                                                 child: TextFormField(
+                                                  key: ValueKey(
+                                                      'emailAddress_Create_mkv3'),
                                                   controller: _model
                                                       .emailAddressCreateTextController,
                                                   focusNode: _model
@@ -1079,6 +1081,8 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                               child: Container(
                                                 width: double.infinity,
                                                 child: TextFormField(
+                                                  key: ValueKey(
+                                                      'password_Create_5asp'),
                                                   controller: _model
                                                       .passwordCreateTextController,
                                                   focusNode: _model
@@ -1246,6 +1250,8 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                               child: Container(
                                                 width: double.infinity,
                                                 child: TextFormField(
+                                                  key: ValueKey(
+                                                      'password_CreateConfirm_7qv7'),
                                                   controller: _model
                                                       .passwordCreateConfirmTextController,
                                                   focusNode: _model
@@ -1415,6 +1421,7 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 16.0),
                                                 child: FFButtonWidget(
+                                                  key: ValueKey('Button_7j5x'),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
                                                         'AUTHENTICATION_GET_STARTED_BTN_ON_TAP');
@@ -1610,6 +1617,7 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget>
                                     text: 'Log In',
                                   ),
                                   Tab(
+                                    key: ValueKey('CreateAccountTab_ufk5'),
                                     text: 'Create Account',
                                   ),
                                 ],
